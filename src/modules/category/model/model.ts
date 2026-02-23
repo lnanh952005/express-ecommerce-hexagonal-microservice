@@ -5,4 +5,4 @@ export const categorySchema = z.object({
 	name: string(),
 });
 
-export type Category = z.infer<typeof categorySchema>;
+export interface Category extends z.infer<typeof categorySchema> {}

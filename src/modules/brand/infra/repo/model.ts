@@ -7,17 +7,18 @@ import {
 } from "sequelize";
 import { sequelize } from "@/shared/components/sequelize";
 
-export const modelName = "Category";
+export const modelName = "Brand";
 
-export class CategoryModel extends Model<
-	InferAttributes<CategoryModel>,
-	InferCreationAttributes<CategoryModel>
+export class BrandModel extends Model<
+	InferAttributes<BrandModel>,
+	InferCreationAttributes<BrandModel>
 > {
 	declare id: CreationOptional<number>;
 	declare name: string;
+	declare description: string | null;
 }
 
-CategoryModel.init(
+BrandModel.init(
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -29,10 +30,15 @@ CategoryModel.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
+		description: {
+			type: DataTypes.STRING,
+			defaultValue: null,
+		},
 	},
 	{
 		sequelize,
 		modelName,
-		tableName: "categories",
+		tableName: "brands",
+		timestamps: true,
 	},
 );
