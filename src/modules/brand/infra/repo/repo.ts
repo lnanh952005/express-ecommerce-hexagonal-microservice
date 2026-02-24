@@ -1,3 +1,4 @@
+import { v7 } from "uuid";
 import type { IBrandRepository } from "../../interface";
 import type { CreateBrandDTO, GetBrandDTO, UpdateBrandDTO } from "../../model/dto";
 import { BrandModel } from "./model";
@@ -23,9 +24,13 @@ export class BrandRepository implements IBrandRepository {
 			where: condition,
 		});
 	}
-	async insert(data: CreateBrandDTO): Promise<number> {
-		const brand = await BrandModel.create(data);
-		return brand.id;
+	async insert(data: CreateBrandDTO): Promise<string> {
+		const id = v7();
+		await BrandModel.create({
+			id,
+			...data,
+		});
+		return id;
 	}
 	async update(id: string, data: UpdateBrandDTO): Promise<void> {
 		await BrandModel.update(data, {

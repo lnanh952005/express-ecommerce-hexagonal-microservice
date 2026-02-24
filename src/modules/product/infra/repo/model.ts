@@ -14,55 +14,75 @@ export class ProductModel extends Model<
 	InferAttributes<ProductModel>,
 	InferCreationAttributes<ProductModel>
 > {
-	declare id: CreationOptional<number>;
+	declare id: string;
 	declare name: string;
 
-    declare price: number;
-    declare salePrice: number;
-    declare colors: string;
-    declare quantity: number;
-    declare brandId: number;
-    declare categoryId: number;
-    declare content: string;
-    declare description: string;
-    declare rating: number;
-    declare saleCount: number;
-    declare status: ModelStatus
-    declare createdAt: Date;
-    declare updatedAt: Date;
+	declare price: number;
+	declare salePrice: number;
+	declare colors: string;
+	declare quantity: number;
+	declare brandId: string;
+	declare categoryId: string;
+	declare content?: string;
+	declare description?: string;
+	declare rating: number;
+	declare saleCount: number;
+	declare status: CreationOptional<ModelStatus>;
+	declare createdAt: CreationOptional<Date>;
+	declare updatedAt: CreationOptional<Date>;
 }
-
-export class BrandModel extends Model<
-	InferAttributes<BrandModel>,
-	InferCreationAttributes<BrandModel>
-> {
-	declare id: CreationOptional<number>;
-	declare name: string;
-}
-
-export class CategoryModel extends Model<
-	InferAttributes<CategoryModel>,
-	InferCreationAttributes<CategoryModel>
-> {
-	declare id: CreationOptional<number>;
-	declare name: string;
-}
-
-
 
 ProductModel.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
-			autoIncrement: true,
 			primaryKey: true,
+			type: DataTypes.UUID,
 			allowNull: false,
 		},
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		
+		brandId: {
+			type: DataTypes.UUID,
+		},
+		categoryId: {
+			type: DataTypes.UUID,
+		},
+		colors: {
+			type: DataTypes.STRING,
+		},
+		content: {
+			type: DataTypes.STRING,
+		},
+		description: {
+			type: DataTypes.STRING,
+		},
+		price: {
+			type: DataTypes.DECIMAL,
+		},
+		quantity: {
+			type: DataTypes.INTEGER,
+		},
+		rating: {
+			type: DataTypes.DECIMAL,
+		},
+		status: {
+			type: DataTypes.ENUM("ACTIVE", "INACTIVE", "DELETED"),
+			defaultValue: "ACTIVE",
+		},
+		saleCount: {
+			type: DataTypes.INTEGER,
+		},
+		salePrice: {
+			type: DataTypes.DECIMAL,
+		},
+		createdAt: {
+			type: DataTypes.DATE,
+		},
+		updatedAt: {
+			type: DataTypes.DATE,
+		},
 	},
 	{
 		sequelize,
@@ -71,3 +91,67 @@ ProductModel.init(
 		tableName: "products",
 	},
 );
+
+export class ProductBrandModel extends Model<
+	InferAttributes<ProductBrandModel>,
+	InferCreationAttributes<ProductBrandModel>
+> {
+	declare id: CreationOptional<number>;
+	declare name: string;
+}
+
+ProductBrandModel.init(
+	{
+		id: {
+			primaryKey: true,
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+		},
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+	},
+	{
+		sequelize,
+		modelName: "ProductBrand",
+		timestamps: false,
+		tableName: "brands",
+	},
+);
+
+export class ProductCategoryModel extends Model<
+	InferAttributes<ProductCategoryModel>,
+	InferCreationAttributes<ProductCategoryModel>
+> {
+	declare id: CreationOptional<number>;
+	declare name: string;
+}
+
+ProductCategoryModel.init(
+	{
+		id: {
+			primaryKey: true,
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull: false,
+		},
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+	},
+	{
+		sequelize,
+		modelName: "ProductCategory",
+		timestamps: false,
+		tableName: "categories",
+	},
+);
+
+ProductModel.belongsTo(ProductCategoryModel, { foreignKey: "categoryId" });
+ProductCategoryModel.hasMany(ProductModel, { foreignKey: "categoryId" });
+
+ProductModel.belongsTo(ProductBrandModel, { foreignKey: "brandId" });
+ProductBrandModel.hasMany(ProductModel, { foreignKey: "brandId" });

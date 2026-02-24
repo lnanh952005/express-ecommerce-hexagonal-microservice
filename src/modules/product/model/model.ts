@@ -16,25 +16,24 @@ export const productSchema = z.object({
 	saleCount: z.number(),
 	status: statusSchema,
 	createdAt: z.date(),
-	updatedAt: z.date()
+	updatedAt: z.date(),
 });
 
 export interface Product extends z.infer<typeof productSchema> {
-	category: ProductCategory;
-	brand: ProductBrand;
+	category?: ProductCategory | null;
+	brand?: ProductBrand | null;
 }
-
 
 export const productBrandSchema = z.object({
 	id: z.string(),
 	name: z.string(),
 });
 
-export interface ProductBrand extends z.infer<typeof productBrandSchema> { }
+export interface ProductBrand extends z.infer<typeof productBrandSchema> {}
 
 export const productCategorySchema = z.object({
 	id: z.string(),
 	name: z.string(),
 });
 
-export interface ProductCategory extends z.infer<typeof productCategorySchema> { }
+export interface ProductCategory extends z.infer<typeof productCategorySchema> {}

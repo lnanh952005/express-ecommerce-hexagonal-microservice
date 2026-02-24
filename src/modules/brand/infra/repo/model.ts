@@ -1,10 +1,4 @@
-import {
-	type CreationOptional,
-	DataTypes,
-	type InferAttributes,
-	type InferCreationAttributes,
-	Model,
-} from "sequelize";
+import { DataTypes, type InferAttributes, type InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "@/shared/components/sequelize";
 
 export const modelName = "Brand";
@@ -13,7 +7,7 @@ export class BrandModel extends Model<
 	InferAttributes<BrandModel>,
 	InferCreationAttributes<BrandModel>
 > {
-	declare id: CreationOptional<number>;
+	declare id: string;
 	declare name: string;
 	declare description: string | null;
 }
@@ -21,8 +15,7 @@ export class BrandModel extends Model<
 BrandModel.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
-			autoIncrement: true,
+			type: DataTypes.UUID,
 			primaryKey: true,
 			allowNull: false,
 		},

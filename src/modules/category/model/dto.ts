@@ -5,16 +5,16 @@ export const createCategorySchema = z.object({
 	name: z.string(),
 });
 
-export interface CreateCategoryDTO extends z.infer<typeof createCategorySchema> { }
+export interface CreateCategoryDTO extends z.infer<typeof createCategorySchema> {}
 
 export const updateCategorySchema = z.object({
 	name: z.string().optional(),
 });
 
-export interface UpdateCategoryDTO extends z.infer<typeof updateCategorySchema> { }
+export interface UpdateCategoryDTO extends z.infer<typeof updateCategorySchema> {}
 
 export const getCategorySchema = paginationSchema.extend({
 	name: z.string().optional(),
-})
+});
 
-export interface GetCategoryDTO extends z.infer<typeof getCategorySchema> { }
+export interface GetCategoryDTO extends z.infer<typeof getCategorySchema> {}

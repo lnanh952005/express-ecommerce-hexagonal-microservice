@@ -1,3 +1,4 @@
+import { v7 } from "uuid";
 import type { ICategoryRepository } from "@/modules/category/interface/index";
 import type { CreateCategoryDTO, GetCategoryDTO, UpdateCategoryDTO } from "../../model/dto";
 import { CategoryModel } from "./model";
@@ -10,7 +11,6 @@ export class CategoryRepository implements ICategoryRepository {
 	}
 	async list(condition: GetCategoryDTO): Promise<CategoryModel[]> {
 		const { limit, page, ...filter } = condition;
-		console.log(filter)
 		const categories = await CategoryModel.findAll({
 			offset: (page - 1) * limit,
 			limit: limit,
@@ -26,8 +26,11 @@ export class CategoryRepository implements ICategoryRepository {
 		return category;
 	}
 
-	async insert(data: CreateCategoryDTO): Promise<number> {
-		const result = await CategoryModel.create(data);
+	async insert(data: CreateCategoryDTO): Promise<string> {
+		const result = await CategoryModel.create({
+			id: v7(),
+			...data,
+		});
 		return result.id;
 	}
 

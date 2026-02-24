@@ -5,8 +5,10 @@ export const paginationSchema = z.object({
 	limit: z.coerce.number().min(10).positive().default(10),
 });
 
-export interface PaginationDTO extends z.infer<typeof paginationSchema> { }
+export interface PaginationDTO extends z.infer<typeof paginationSchema> {}
 
 export const statusSchema = z.enum(["ACTIVE", "INACTIVE", "DELETED"]);
 
 export type ModelStatus = z.infer<typeof statusSchema>;
+
+export const foreignKeySchema = z.string().nonempty();

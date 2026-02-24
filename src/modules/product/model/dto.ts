@@ -1,20 +1,30 @@
 import z from "zod";
-import { paginationSchema } from "@/shared/models";
+import { foreignKeySchema, paginationSchema } from "@/shared/models";
 
-export const createCategorySchema = z.object({
-	name: z.string(),
+export const createProductSchema = z.object({
+	name: z.string().nonempty(),
+	price: z.number().positive(),
+	salePrice: z.number().positive(),
+	colors: z.string().nonempty(),
+	quantity: z.number().positive(),
+	content: z.string().optional(),
+	description: z.string().optional(),
+	rating: z.number().positive(),
+	saleCount: z.number().positive(),
+	brandId: foreignKeySchema,
+	categoryId: foreignKeySchema,
 });
 
-export interface CreateCategoryDTO extends z.infer<typeof createCategorySchema> { }
+export interface CreateProductDTO extends z.infer<typeof createProductSchema> {}
 
-export const updateCategorySchema = z.object({
+export const updateProductSchema = z.object({
 	name: z.string().optional(),
 });
 
-export interface UpdateCategoryDTO extends z.infer<typeof updateCategorySchema> { }
+export interface UpdateProductDTO extends z.infer<typeof updateProductSchema> {}
 
-export const getCategorySchema = paginationSchema.extend({
+export const getProductSchema = paginationSchema.extend({
 	name: z.string().optional(),
-})
+});
 
-export interface GetCategoryDTO extends z.infer<typeof getCategorySchema> { }
+export interface GetProductDTO extends z.infer<typeof getProductSchema> {}

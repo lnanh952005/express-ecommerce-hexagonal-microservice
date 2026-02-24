@@ -9,7 +9,7 @@ export class BrandUseCase implements IBrandUseCase {
 		const brands = await this.repository.list(filter);
 		return brands.map((brand) => BrandSchema.parse(brand));
 	}
-	async createBrand(data: CreateBrandDTO): Promise<number> {
+	async createBrand(data: CreateBrandDTO): Promise<string> {
 		const checkExist = await this.repository.findByCondition({ name: data.name });
 		if (checkExist) {
 			throw DataAlreadyExistsError;

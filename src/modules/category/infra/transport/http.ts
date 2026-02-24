@@ -1,47 +1,42 @@
 import type { RequestHandler } from "express";
+import type { IResponse } from "@/shared/interfaces/fortmat-response";
 import type { ICategoryUseCase } from "../../interface";
 import type { CreateCategoryDTO, GetCategoryDTO } from "../../model/dto";
 
 export class CategoryHttpService {
-	constructor(private readonly useCase: ICategoryUseCase) { }
+	constructor(private readonly useCase: ICategoryUseCase) {}
 
-	createCategoryAPI: RequestHandler<unknown, unknown, CreateCategoryDTO> = async (req, res) => {
-		const { name } = req.body;
-		const id = await this.useCase.createCategory({ name });
-		return res.status(201).json({ id });
+	createCategoryAPI: RequestHandler<unknown, IResponse, CreateCategoryDTO> = async (req, res) => {
+		const id = await this.useCase.createCategory(req.body);
+		return res.status(201).json({ code: 201, data: id });
 	};
 
-	updateCategoryAPI: RequestHandler<{ id: string }, unknown, CreateCategoryDTO> = async (
+	updateCategoryAPI: RequestHandler<{ id: string }, IResponse, CreateCategoryDTO> = async (
 		req,
 		res,
 	) => {
 		const { id } = req.params;
-		const { name } = req.body;
-		await this.useCase.updateCategory(id, { name });
-		return res.status(200).json({ message: "Category updated" });
+		await this.useCase.updateCategory(id, req.body);
+		return res.status(200).json({ code: 200, message: "Category updated", data: true });
 	};
 
-	deleteCategoryAPI: RequestHandler<{ id: string }> = async (req, res) => {
+	deleteCategoryAPI: RequestHandler<{ id: string }, IResponse> = async (req, res) => {
 		const { id } = req.params;
 		await this.useCase.deleteCategory(id);
-		return res.status(200).json({ message: "Category deleted" });
+		return res.status(200).json({ code: 200, message: "Category deleted", data: true });
 	};
 
-	getCategoryAPI: RequestHandler<{ id: string }> = async (req, res) => {
+	getCategoryAPI: RequestHandler<{ id: string }, IResponse> = async (req, res) => {
 		const { id } = req.params;
 		const category = await this.useCase.getCategory(id);
-		if (!category) {
-			return res.status(404).json({ message: "Category not found" });
-		}
-		return res.status(200).json(category);
+		return res.status(200).json({ code: 200, data: category });
 	};
 
-	listCategoriesAPI: RequestHandler<unknown, unknown, unknown, GetCategoryDTO> = async (
+	listCategoriesAPI: RequestHandler<unknown, IResponse, unknown, GetCategoryDTO> = async (
 		req,
 		res,
 	) => {
-
 		const categories = await this.useCase.listCategories(req.query);
-		return res.status(200).json(categories);
+		return res.status(200).json({ code: 200, data: categories });
 	};
 }

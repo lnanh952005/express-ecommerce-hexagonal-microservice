@@ -1,24 +1,19 @@
-import type { IRepository } from "@/shared/interfaces/index";
-import type { CategoryModel } from "../infra/repo/model";
-import type { CreateCategoryDTO, GetCategoryDTO, UpdateCategoryDTO } from "../model/dto";
+import type { ICommandRepository, IQueryRepository, IUseCase } from "@/shared/interfaces/index";
+import type { ProductModel } from "../infra/repo/model";
+import type { CreateProductDTO, GetProductDTO, UpdateProductDTO } from "../model/dto";
 import type { Product, ProductBrand, ProductCategory } from "../model/model";
 
-export interface IProductUseCase {
-	getProduct(id: string): Promise<Product>;
-	listProducts(filter: GetCategoryDTO): Promise<Product[]>;
-	createProduct(data: CreateCategoryDTO): Promise<number>;
-	updateProduct(id: string, data: UpdateCategoryDTO): Promise<boolean>;
-	deleteProduct(id: string): Promise<boolean>;
-}
+export interface IProductUseCase
+	extends IUseCase<Product, CreateProductDTO, UpdateProductDTO, GetProductDTO> {}
 
 export interface IProductRepository
-	extends IRepository<CategoryModel, CreateCategoryDTO, UpdateCategoryDTO, GetCategoryDTO> { }
+	extends IQueryRepository<ProductModel, GetProductDTO>,
+		ICommandRepository<CreateProductDTO, UpdateProductDTO> {}
 
-
-export interface IBrandQueryRepository {
-	get(id: number): Promise<ProductBrand | null>
+export interface IRPCBrandQueryRepository {
+	get(id: string): Promise<ProductBrand | null>;
 }
 
-export interface ICategoryQueryRepository {
-	get(index: number): Promise<ProductCategory | null>;
+export interface IRPCCategoryQueryRepository {
+	get(id: string): Promise<ProductCategory | null>;
 }

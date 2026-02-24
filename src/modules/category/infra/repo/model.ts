@@ -1,10 +1,4 @@
-import {
-	type CreationOptional,
-	DataTypes,
-	type InferAttributes,
-	type InferCreationAttributes,
-	Model,
-} from "sequelize";
+import { DataTypes, type InferAttributes, type InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "@/shared/components/sequelize";
 
 export const modelName = "Category";
@@ -13,16 +7,15 @@ export class CategoryModel extends Model<
 	InferAttributes<CategoryModel>,
 	InferCreationAttributes<CategoryModel>
 > {
-	declare id: CreationOptional<number>;
+	declare id: string;
 	declare name: string;
 }
 
 CategoryModel.init(
 	{
 		id: {
-			type: DataTypes.INTEGER,
-			autoIncrement: true,
 			primaryKey: true,
+			type: DataTypes.UUID,
 			allowNull: false,
 		},
 		name: {

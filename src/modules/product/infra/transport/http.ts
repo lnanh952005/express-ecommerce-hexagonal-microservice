@@ -1,47 +1,42 @@
 import type { RequestHandler } from "express";
-import type { ICategoryUseCase } from "../../interface";
-import type { CreateCategoryDTO, GetCategoryDTO } from "../../model/dto";
+import type { IResponse } from "@/shared/interfaces/fortmat-response";
+import type { IProductUseCase } from "../../interface";
+import type { CreateProductDTO, GetProductDTO } from "../../model/dto";
 
-export class CategoryHttpService {
-	constructor(private readonly useCase: ICategoryUseCase) { }
+export class ProductHttpService {
+	constructor(private readonly useCase: IProductUseCase) {}
 
-	createCategoryAPI: RequestHandler<unknown, unknown, CreateCategoryDTO> = async (req, res) => {
-		const { name } = req.body;
-		const id = await this.useCase.createCategory({ name });
-		return res.status(201).json({ id });
+	createProductAPI: RequestHandler<unknown, IResponse, CreateProductDTO> = async (req, res) => {
+		const id = await this.useCase.createProduct(req.body);
+		return res.status(201).json({ code: 201, data: id });
 	};
 
-	updateCategoryAPI: RequestHandler<{ id: string }, unknown, CreateCategoryDTO> = async (
+	updateProductAPI: RequestHandler<{ id: string }, IResponse, CreateProductDTO> = async (
 		req,
 		res,
 	) => {
 		const { id } = req.params;
-		const { name } = req.body;
-		await this.useCase.updateCategory(id, { name });
-		return res.status(200).json({ message: "Category updated" });
+		await this.useCase.updateProduct(id, req.body);
+		return res.status(200).json({ code: 200, message: "Product updated", data: true });
 	};
 
-	deleteCategoryAPI: RequestHandler<{ id: string }> = async (req, res) => {
+	deleteProductAPI: RequestHandler<{ id: string }, IResponse> = async (req, res) => {
 		const { id } = req.params;
-		await this.useCase.deleteCategory(id);
-		return res.status(200).json({ message: "Category deleted" });
+		await this.useCase.deleteProduct(id);
+		return res.status(200).json({ code: 200, message: "Product deleted", data: true });
 	};
 
-	getCategoryAPI: RequestHandler<{ id: string }> = async (req, res) => {
+	getProductAPI: RequestHandler<{ id: string }, IResponse> = async (req, res) => {
 		const { id } = req.params;
-		const category = await this.useCase.getCategory(id);
-		if (!category) {
-			return res.status(404).json({ message: "Category not found" });
-		}
-		return res.status(200).json(category);
+		const product = await this.useCase.getProduct(id);
+		return res.status(200).json({ code: 200, data: product });
 	};
 
-	listCategoriesAPI: RequestHandler<unknown, unknown, unknown, GetCategoryDTO> = async (
+	listProductsAPI: RequestHandler<unknown, IResponse, unknown, GetProductDTO> = async (
 		req,
 		res,
 	) => {
-
-		const categories = await this.useCase.listCategories(req.query);
-		return res.status(200).json(categories);
+		const products = await this.useCase.listProducts(req.query);
+		return res.status(200).json({ code: 200, data: products });
 	};
 }
