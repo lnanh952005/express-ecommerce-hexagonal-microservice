@@ -27,6 +27,9 @@
 			"recommended": true,
 			"suspicious": {
 				"noExplicitAny": "off"
+			},
+			"style": {
+				"useNodejsImportProtocol": "off"
 			}
 		}
 	},

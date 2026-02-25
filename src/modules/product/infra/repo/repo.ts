@@ -20,7 +20,9 @@ export class ProductRepository implements IProductRepository {
 	}
 
 	async get(id: string): Promise<ProductEntity | null> {
-		const product = await ProductEntity.findOneBy({ id });
+		const product = await ProductEntity.findOne({
+			where: { id },
+		});
 		return product;
 	}
 

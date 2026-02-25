@@ -1,6 +1,6 @@
+import "reflect-metadata";
 import compression from "compression";
 import "dotenv/config";
-// import "reflect-metadata";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";

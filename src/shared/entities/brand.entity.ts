@@ -1,11 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { ProductEntity } from "./product.entity";
 
-@Entity()
+@Entity("brands")
 export class BrandEntity extends BaseEntity {
 	@PrimaryColumn("uuid")
 	id: string;
 
-	@Column()
+	@Column("varchar")
 	name: string;
 
 	@Column("text", {
@@ -13,4 +14,10 @@ export class BrandEntity extends BaseEntity {
 		default: null,
 	})
 	description: string;
+
+	@OneToMany(
+		(_type) => ProductEntity,
+		(product) => product.brand,
+	)
+	products: ProductEntity[];
 }

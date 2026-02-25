@@ -3,7 +3,7 @@ import { paginationSchema } from "@/shared/models";
 
 export const createBrandSchema = z.object({
 	name: z.string().nonempty(),
-	description: z.string(),
+	description: z.string().optional(),
 });
 
 export interface CreateBrandDTO extends z.infer<typeof createBrandSchema> {}

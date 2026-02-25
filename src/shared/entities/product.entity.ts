@@ -1,13 +1,22 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import {
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn,
+	UpdateDateColumn,
+} from "typeorm";
 import { BrandEntity } from "./brand.entity";
 import { CategoryEntity } from "./category.entity";
 
 @Entity("products")
 export class ProductEntity extends BaseEntity {
-	@PrimaryColumn('uuid')
+	@PrimaryColumn("uuid")
 	id: string;
 
-	@Column('string')
+	@Column("varchar")
 	name: string;
 
 	@Column("double")
@@ -16,35 +25,53 @@ export class ProductEntity extends BaseEntity {
 	@Column("double")
 	salePrice: number;
 
-	@Column('string')
+	@Column("varchar")
 	colors: string;
 
-	@Column('integer')
+	@Column("integer")
 	quantity: number;
 
-	@ManyToOne((_type) => BrandEntity)
-	@JoinColumn()
-	brand: BrandEntity;
-
-	@ManyToOne((_type) => CategoryEntity)
-	@JoinColumn()
-	category: CategoryEntity;
-
-	@Column('text')
+	@Column("text")
 	content: string;
 
-	@Column('text')
+	@Column("longtext")
 	description: string;
 
-	@Column('double')
+	@Column("double")
 	rating: number;
 
-	@Column('integer')
+	@Column("integer")
 	saleCount: number;
 
-	@Column('enum',{
+	@Column("enum", {
 		enum: ["ACTIVE", "INACTIVE", "DELETED"],
 		default: "ACTIVE",
 	})
 	status: string;
+
+	@Column("varchar")
+	brandId: string;
+
+	@Column("varchar")
+	categoryId: string;
+
+	@ManyToOne(
+		(_type) => BrandEntity,
+		(brand) => brand.products,
+	)
+	@JoinColumn({ name: "brandId" })
+	brand: BrandEntity;
+
+	@ManyToOne(
+		(_type) => CategoryEntity,
+		(category) => category.products,
+	)
+	@JoinColumn({ name: "categoryId" })
+	category: CategoryEntity;
+
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	updatedAt: Date;
 }

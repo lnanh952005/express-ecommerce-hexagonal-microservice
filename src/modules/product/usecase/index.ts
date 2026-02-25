@@ -40,12 +40,13 @@ export class ProductUseCase implements IProductUseCase {
 	}
 
 	async getData(id: string): Promise<Product> {
+		console.log(id)
 		const product = await this.repository.get(id);
 		if (!product) {
 			throw DataNotFoundError;
 		}
-		const brand = await this.rpcBrandRepo.get(product.brand.id);
-		const category = await this.rpcCategoryRepo.get(product.category.id);
+		const brand = await this.rpcBrandRepo.get(product.brandId);
+		const category = await this.rpcCategoryRepo.get(product.categoryId);
 		const parsedProduct = productSchema.parse(product);
 		return { ...parsedProduct, brand, category };
 	}

@@ -30,7 +30,7 @@ export class RPCBrandRepository implements IRPCBrandQueryRepository {
 export class RPCCategoryRepository implements IRPCCategoryQueryRepository {
 	url: string;
 	constructor() {
-		this.url = "/api/v1/brands";
+		this.url = "/api/v1/categories";
 	}
 	async get(id: string): Promise<ProductCategory | null> {
 		try {
