@@ -5,7 +5,7 @@ import type {
 	IRPCBrandQueryRepository,
 	IRPCCategoryQueryRepository,
 } from "../interface";
-import type { CreateProductDTO, GetProductDTO, UpdateProductDTO } from "../model/dto";
+import type { CreateProductDTO, FilterProductDTO, UpdateProductDTO } from "../model/dto";
 import { BrandNotFoundError, CategoryNotFoundError } from "../model/error";
 import { type Product, productSchema } from "../model/model";
 
@@ -44,13 +44,13 @@ export class ProductUseCase implements IProductUseCase {
 		if (!product) {
 			throw DataNotFoundError;
 		}
-		const brand = await this.rpcBrandRepo.get(product.brandId);
-		const category = await this.rpcCategoryRepo.get(product.categoryId);
+		const brand = await this.rpcBrandRepo.get(product.brand.id);
+		const category = await this.rpcCategoryRepo.get(product.category.id);
 		const parsedProduct = productSchema.parse(product);
 		return { ...parsedProduct, brand, category };
 	}
 
-	async listData(filter: GetProductDTO): Promise<Product[]> {
+	async listData(filter: FilterProductDTO): Promise<Product[]> {
 		const products = await this.repository.list(filter);
 		return products.map((p) => productSchema.parse(p));
 	}

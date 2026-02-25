@@ -1,5 +1,6 @@
-import "dotenv/config";
 import compression from "compression";
+import "dotenv/config";
+// import "reflect-metadata";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -7,7 +8,7 @@ import { brandModule } from "./modules/brand";
 import { categoryModule } from "./modules/category/index";
 import { productModule } from "./modules/product";
 import { env } from "./shared/components/env";
-import { sequelize } from "./shared/components/sequelize";
+import { mySqlDataSource } from "./shared/components/type-orm";
 import { errorHandler } from "./shared/middlewares/error-handler.middleware";
 
 const app = express();
@@ -28,7 +29,7 @@ const router = () => {
 
 (async () => {
 	try {
-		await sequelize.sync({ alter: true });
+		await mySqlDataSource.initialize();
 		app.use("/api/v1", router());
 		app.use(errorHandler);
 		app.listen(env.PORT, () => {

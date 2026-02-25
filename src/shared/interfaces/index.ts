@@ -1,6 +1,6 @@
-export interface IQueryRepository<Entity, GetEntityDTO = undefined> {
+export interface IQueryRepository<Entity, FilterDTO> {
 	get(id: string): Promise<Entity | null>;
-	list(condition: GetEntityDTO): Promise<Entity[]>;
+	list(filter: FilterDTO): Promise<Entity[]>;
 	findByCondition(condition: Record<string, any>): Promise<Entity | null>;
 }
 
@@ -18,10 +18,10 @@ export interface IQueryHandler<QueryDTO, Result> {
 	query(query: QueryDTO): Promise<Result>;
 }
 
-export interface IUseCase<Entity, CreateDTO, UpdateDTO, GetDTO = undefined> {
+export interface IUseCase<Entity, CreateDTO, UpdateDTO, FilterDTO> {
 	createData(data: CreateDTO): Promise<string>;
 	updateData(id: string, data: UpdateDTO): Promise<boolean>;
 	getData(id: string): Promise<Entity>;
-	listData(filter: GetDTO): Promise<Entity[]>;
+	listData(filter: FilterDTO): Promise<Entity[]>;
 	deleteData(id: string): Promise<boolean>;
 }

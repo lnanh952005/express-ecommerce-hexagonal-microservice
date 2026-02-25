@@ -23,8 +23,8 @@ export const updateProductSchema = z.object({
 
 export interface UpdateProductDTO extends z.infer<typeof updateProductSchema> {}
 
-export const getProductSchema = paginationSchema.extend({
+export const filterProductSchema = paginationSchema.extend({
 	name: z.string().optional(),
 });
 
-export interface GetProductDTO extends z.infer<typeof getProductSchema> {}
+export interface FilterProductDTO extends z.infer<typeof filterProductSchema> {}

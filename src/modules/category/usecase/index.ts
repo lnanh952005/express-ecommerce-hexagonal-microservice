@@ -1,6 +1,6 @@
 import type { ICategoryRepository, ICategoryUseCase } from "@/modules/category/interface/index";
 import { DataNotFoundError } from "@/shared/models/error";
-import type { CreateCategoryDTO, GetCategoryDTO, UpdateCategoryDTO } from "../model/dto";
+import type { CreateCategoryDTO, FilterCategoryDTO, UpdateCategoryDTO } from "../model/dto";
 import { type Category, categorySchema } from "../model/model";
 
 export class CategoryUseCase implements ICategoryUseCase {
@@ -24,7 +24,7 @@ export class CategoryUseCase implements ICategoryUseCase {
 		}
 		return categorySchema.parse(category);
 	}
-	async listData(filter: GetCategoryDTO): Promise<Category[]> {
+	async listData(filter: FilterCategoryDTO): Promise<Category[]> {
 		const categories = await this.repository.list(filter);
 		return categories.map((category) => categorySchema.parse(category));
 	}

@@ -12,10 +12,7 @@ import {
 import { myAxios } from "@/shared/components/axios";
 
 export class RPCBrandRepository implements IRPCBrandQueryRepository {
-	url: string;
-	constructor() {
-		this.url = "/api/v1/brands";
-	}
+	private url: string = "/api/v1/brands";
 
 	async get(id: string): Promise<ProductBrand | null> {
 		try {

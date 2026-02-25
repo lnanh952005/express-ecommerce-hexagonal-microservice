@@ -3,6 +3,7 @@ import { paginationSchema } from "@/shared/models";
 
 export const createBrandSchema = z.object({
 	name: z.string().nonempty(),
+	description: z.string(),
 });
 
 export interface CreateBrandDTO extends z.infer<typeof createBrandSchema> {}
@@ -11,8 +12,8 @@ export const updateBrandSchema = createBrandSchema.partial();
 
 export interface UpdateBrandDTO extends z.infer<typeof updateBrandSchema> {}
 
-export const getBrandSchema = paginationSchema.extend({
+export const filterBrandSchema = paginationSchema.extend({
 	name: z.string().optional(),
 });
 
-export interface GetBrandDTO extends z.infer<typeof getBrandSchema> {}
+export interface FilterBrandDTO extends z.infer<typeof filterBrandSchema> {}

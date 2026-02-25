@@ -13,8 +13,8 @@ export const updateCategorySchema = z.object({
 
 export interface UpdateCategoryDTO extends z.infer<typeof updateCategorySchema> {}
 
-export const getCategorySchema = paginationSchema.extend({
+export const filterCategorySchema = paginationSchema.extend({
 	name: z.string().optional(),
 });
 
-export interface GetCategoryDTO extends z.infer<typeof getCategorySchema> {}
+export interface FilterCategoryDTO extends z.infer<typeof filterCategorySchema> {}

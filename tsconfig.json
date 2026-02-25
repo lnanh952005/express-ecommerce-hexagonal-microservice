@@ -6,9 +6,8 @@
 		"outDir": "./dist",
 		// Environment Settings
 		// See also https://aka.ms/tsconfig/module
-		"module": "nodenext",
-		"target": "esnext",
-		"moduleResolution": "nodenext",
+		"module": "commonjs",
+		"target": "es6",
 		"types": [],
 		// For nodejs:
 		// "lib": ["esnext"],
@@ -38,6 +37,9 @@
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"resolvePackageJsonExports": true,
+		"strictPropertyInitialization": false,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
 		"paths": {
 			"@/*": ["./src/*"]
 		}
