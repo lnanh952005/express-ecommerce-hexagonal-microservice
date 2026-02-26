@@ -1,21 +1,10 @@
-import {
-	BaseEntity,
-	Column,
-	CreateDateColumn,
-	Entity,
-	JoinColumn,
-	ManyToOne,
-	PrimaryColumn,
-	UpdateDateColumn,
-} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { TypeORMBaseEntity } from "./base.entity";
 import { BrandEntity } from "./brand.entity";
 import { CategoryEntity } from "./category.entity";
 
 @Entity("products")
-export class ProductEntity extends BaseEntity {
-	@PrimaryColumn("uuid")
-	id: string;
-
+export class ProductEntity extends TypeORMBaseEntity {
 	@Column("varchar")
 	name: string;
 
@@ -68,10 +57,4 @@ export class ProductEntity extends BaseEntity {
 	)
 	@JoinColumn({ name: "categoryId" })
 	category: CategoryEntity;
-
-	@CreateDateColumn()
-	createdAt: Date;
-
-	@UpdateDateColumn()
-	updatedAt: Date;
 }

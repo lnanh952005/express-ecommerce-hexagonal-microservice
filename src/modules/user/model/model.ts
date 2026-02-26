@@ -1,9 +1,12 @@
 import z from "zod";
 
-export const BrandSchema = z.object({
+export const userSchema = z.object({
 	id: z.string(),
 	name: z.string(),
-	description: z.string().nullable(),
+	email: z.string(),
+	password: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 });
 
-export interface Brand extends z.infer<typeof BrandSchema> {}
+export interface User extends z.infer<typeof userSchema> {}

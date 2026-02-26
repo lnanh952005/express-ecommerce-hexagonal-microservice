@@ -1,14 +1,17 @@
+import { paginationSchema } from "@shared/models";
 import z from "zod";
-import { paginationSchema } from "@/shared/models";
 
 export const createUserSchema = z.object({
 	name: z.string().nonempty(),
-	description: z.string().optional(),
+	email: z.email(),
+	password: z.string().min(8),
 });
 
 export interface CreateUserDTO extends z.infer<typeof createUserSchema> {}
 
-export const updateUserSchema = createUserSchema.partial();
+export const updateUserSchema = z.object({
+	name: z.string().nonempty().optional(),
+});
 
 export interface UpdateUserDTO extends z.infer<typeof updateUserSchema> {}
 
@@ -17,3 +20,18 @@ export const filterUserSchema = paginationSchema.extend({
 });
 
 export interface FilterUserDTO extends z.infer<typeof filterUserSchema> {}
+
+export const loginSchema = z.object({
+	email: z.email(),
+	password: z.string().min(8),
+});
+
+export interface LoginDTO extends z.infer<typeof loginSchema> {}
+
+export const registerSchema = z.object({
+	email: z.string(),
+	name: z.string(),
+	password: z.string(),
+});
+
+export interface RegisterDTO extends z.infer<typeof registerSchema> {}

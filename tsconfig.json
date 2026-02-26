@@ -41,7 +41,7 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"@*": ["./src/*"]
 		}
 	}
 }

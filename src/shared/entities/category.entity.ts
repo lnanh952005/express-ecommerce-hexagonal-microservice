@@ -1,11 +1,9 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { TypeORMBaseEntity } from "./base.entity";
 import { ProductEntity } from "./product.entity";
 
 @Entity("categories")
-export class CategoryEntity extends BaseEntity {
-	@PrimaryColumn("uuid")
-	id: string;
-
+export class CategoryEntity extends TypeORMBaseEntity {
 	@Column("varchar")
 	name: string;
 

@@ -5,7 +5,7 @@ import type { IResponse } from "../interfaces/fortmat-response";
 
 export abstract class BaseHttpService<T extends IUseCase<any, any, any, any>> {
 	constructor(
-		private readonly useCase: T,
+		protected readonly useCase: T,
 		private readonly createSchema: z.ZodType,
 		private readonly updateSchema: z.ZodType,
 		private readonly filterSchema: z.ZodType,

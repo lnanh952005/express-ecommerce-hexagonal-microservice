@@ -1,11 +1,19 @@
-import type { BrandEntity } from "@/shared/entities/brand.entity";
-import type { ICommandRepository, IQueryRepository, IUseCase } from "@/shared/interfaces";
-import type { CreateBrandDTO, FilterBrandDTO, UpdateBrandDTO } from "../model/dto";
-import type { Brand } from "../model/model";
+import type { UserEntity } from "@shared/entities/user.entity";
+import type { ICommandRepository, IQueryRepository, IUseCase } from "@shared/interfaces";
+import type {
+	CreateUserDTO,
+	FilterUserDTO,
+	LoginDTO,
+	RegisterDTO,
+	UpdateUserDTO,
+} from "../model/dto";
+import type { User } from "../model/model";
 
-export interface IBrandUseCase
-	extends IUseCase<Brand, CreateBrandDTO, UpdateBrandDTO, FilterBrandDTO> {}
+export interface IUserUseCase extends IUseCase<User, CreateUserDTO, UpdateUserDTO, FilterUserDTO> {
+	login(dto: LoginDTO): Promise<{ accessToken: string; refreshToken: string }>;
+	register(dto: RegisterDTO): Promise<true>;
+}
 
-export interface IBrandRepository
-	extends IQueryRepository<BrandEntity, FilterBrandDTO>,
-		ICommandRepository<CreateBrandDTO, UpdateBrandDTO> {}
+export interface IUserRepository
+	extends IQueryRepository<UserEntity, FilterUserDTO>,
+		ICommandRepository<CreateUserDTO, UpdateUserDTO> {}
