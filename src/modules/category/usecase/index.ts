@@ -1,5 +1,5 @@
-import type { ICategoryRepository, ICategoryUseCase } from "@/modules/category/interface/index";
-import { DataNotFoundError } from "@/shared/models/error";
+import type { ICategoryRepository, ICategoryUseCase } from "@modules/category/interface/index";
+import { DataNotFoundError } from "@shared/models/error";
 import type { CreateCategoryDTO, FilterCategoryDTO, UpdateCategoryDTO } from "../model/dto";
 import { type Category, categorySchema } from "../model/model";
 

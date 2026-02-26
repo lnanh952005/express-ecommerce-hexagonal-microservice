@@ -2,14 +2,14 @@ import type { AxiosError } from "axios";
 import type {
 	IRPCBrandQueryRepository,
 	IRPCCategoryQueryRepository,
-} from "@/modules/product/interface";
+} from "@modules/product/interface";
 import {
 	type ProductBrand,
 	type ProductCategory,
 	productBrandSchema,
 	productCategorySchema,
-} from "@/modules/product/model/model";
-import { myAxios } from "@/shared/components/axios";
+} from "@modules/product/model/model";
+import { myAxios } from "@shared/components/axios";
 
 export class RPCBrandRepository implements IRPCBrandQueryRepository {
 	private url: string = "/api/v1/brands";

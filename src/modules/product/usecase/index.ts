@@ -1,4 +1,4 @@
-import { DataNotFoundError } from "@/shared/models/error";
+import { DataNotFoundError } from "@shared/models/error";
 import type {
 	IProductRepository,
 	IProductUseCase,
@@ -15,10 +15,10 @@ export class ProductUseCase implements IProductUseCase {
 		private readonly rpcBrandRepo: IRPCBrandQueryRepository,
 		private readonly rpcCategoryRepo: IRPCCategoryQueryRepository,
 	) {}
-	async createData(data: CreateProductDTO): Promise<string> {
+	async createData(dto: CreateProductDTO): Promise<string> {
 		const [checkBrand, checkCategory] = await Promise.all([
-			this.rpcBrandRepo.get(data.brandId),
-			this.rpcCategoryRepo.get(data.categoryId),
+			this.rpcBrandRepo.get(dto.brandId),
+			this.rpcCategoryRepo.get(dto.categoryId),
 		]);
 		if (!checkBrand) {
 			throw BrandNotFoundError;
@@ -26,21 +26,21 @@ export class ProductUseCase implements IProductUseCase {
 		if (!checkCategory) {
 			throw CategoryNotFoundError;
 		}
-		const id = await this.repository.insert(data);
+		const id = await this.repository.insert(dto);
 		return id;
 	}
 
-	async updateData(id: string, data: UpdateProductDTO): Promise<boolean> {
+	async updateData(id: string, dto: UpdateProductDTO): Promise<boolean> {
 		const Product = await this.repository.get(id);
 		if (!Product) {
 			throw DataNotFoundError;
 		}
-		await this.repository.update(id, data);
+		await this.repository.update(id, dto);
 		return true;
 	}
 
 	async getData(id: string): Promise<Product> {
-		console.log(id)
+		console.log(id);
 		const product = await this.repository.get(id);
 		if (!product) {
 			throw DataNotFoundError;

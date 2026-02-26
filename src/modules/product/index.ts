@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { asyncHandler } from "@/shared/middlewares/async-handler.middleware";
+import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
 import { ProductRepository } from "./infra/repo/repo";
 import { RPCBrandRepository, RPCCategoryRepository } from "./infra/repo/rpc";
 import { ProductHttpService } from "./infra/transport/http";

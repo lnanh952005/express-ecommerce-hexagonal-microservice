@@ -1,5 +1,5 @@
+import { BrandEntity } from "@shared/entities/brand.entity";
 import { v7 } from "uuid";
-import { BrandEntity } from "@/shared/entities/brand.entity";
 import type { IBrandRepository } from "../../interface";
 import type { CreateBrandDTO, FilterBrandDTO, UpdateBrandDTO } from "../../model/dto";
 

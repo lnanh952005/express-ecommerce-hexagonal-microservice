@@ -1,5 +1,5 @@
-import type { ProductEntity } from "@/shared/entities/product.entity";
-import type { ICommandRepository, IQueryRepository, IUseCase } from "@/shared/interfaces/index";
+import type { ProductEntity } from "@shared/entities/product.entity";
+import type { ICommandRepository, IQueryRepository, IUseCase } from "@shared/interfaces/index";
 import type { CreateProductDTO, FilterProductDTO, UpdateProductDTO } from "../model/dto";
 import type { Product, ProductBrand, ProductCategory } from "../model/model";
 

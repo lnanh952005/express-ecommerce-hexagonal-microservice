@@ -1,5 +1,5 @@
-import type { BrandEntity } from "@/shared/entities/brand.entity";
-import type { ICommandRepository, IQueryRepository, IUseCase } from "@/shared/interfaces";
+import type { BrandEntity } from "@shared/entities/brand.entity";
+import type { ICommandRepository, IQueryRepository, IUseCase } from "@shared/interfaces";
 import type { CreateBrandDTO, FilterBrandDTO, UpdateBrandDTO } from "../model/dto";
 import type { Brand } from "../model/model";
 

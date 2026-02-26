@@ -18,20 +18,20 @@ export class UserUseCase implements IUserUseCase {
 		private readonly jwtService: JwtService,
 	) {}
 
-	async createData(data: CreateUserDTO): Promise<string> {
-		const checkExist = await this.repository.findByCondition({ name: data.name });
+	async createData(dto: CreateUserDTO): Promise<string> {
+		const checkExist = await this.repository.findByCondition({ name: dto.name });
 		if (checkExist) {
 			throw DataAlreadyExistsError;
 		}
-		const id = await this.repository.insert(data);
+		const id = await this.repository.insert(dto);
 		return id;
 	}
-	async updateData(id: string, data: UpdateUserDTO): Promise<boolean> {
+	async updateData(id: string, dto: UpdateUserDTO): Promise<boolean> {
 		const User = await this.repository.get(id);
 		if (!User) {
 			throw DataNotFoundError;
 		}
-		this.repository.update(id, data);
+		this.repository.update(id, dto);
 		return true;
 	}
 	async getData(id: string): Promise<User> {

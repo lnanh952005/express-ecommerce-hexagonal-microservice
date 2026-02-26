@@ -1,5 +1,5 @@
 import { v7 } from "uuid";
-import { ProductEntity } from "@/shared/entities/product.entity";
+import { ProductEntity } from "@shared/entities/product.entity";
 import type { IProductRepository } from "../../interface";
 import type { CreateProductDTO, FilterProductDTO, UpdateProductDTO } from "../../model/dto";
 
