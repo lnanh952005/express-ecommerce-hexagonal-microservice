@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import type { StringValue } from "ms";
-import type { ITokenPayload } from "../interfaces/token-payload";
+import type { IJwtprovider, ITokenPayload } from "../interfaces/token-payload";
 
-export class JwtService {
+export class JwtService implements IJwtprovider {
 	constructor(
 		private readonly accessKey: string,
 		private readonly refreshKey: string,

@@ -1,6 +1,8 @@
 export class AppError extends Error {
-	statusCode?: number | undefined;
-	constructor(message: string, statusCode?: number) {
+	constructor(
+		public message: string,
+		public statusCode?: number,
+	) {
 		super(message);
 		Object.setPrototypeOf(this, AppError.prototype);
 		this.name = this.constructor.name;

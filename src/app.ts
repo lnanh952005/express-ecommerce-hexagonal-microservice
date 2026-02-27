@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import compression from "compression";
 import "dotenv/config";
+import { userModule } from "@modules/user";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -24,6 +25,7 @@ const router = () => {
 	router.use("/categories", categoryModule());
 	router.use("/brands", brandModule());
 	router.use("/products", productModule());
+	router.use("/users", userModule());
 	return router;
 };
 

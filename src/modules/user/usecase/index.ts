@@ -1,5 +1,6 @@
-import type { JwtService } from "@shared/components/jwt";
-import { DataAlreadyExistsError, DataNotFoundError } from "@shared/models/error";
+import { ModelStatus } from "@shared/constants/enum.constant";
+import type { IJwtprovider, ITokenPayload } from "@shared/interfaces/token-payload";
+import { DataNotFoundError } from "@shared/models/error";
 import { comparePassword, hashPassword } from "@shared/utils/bcrypt";
 import type { IUserRepository, IUserUseCase } from "../interface";
 import type {
@@ -15,44 +16,44 @@ import { type Profile, profileSchema, type User, userSchema } from "../model/mod
 export class UserUseCase implements IUserUseCase {
 	constructor(
 		private readonly repository: IUserRepository,
-		private readonly jwtService: JwtService,
+		private readonly jwtService: IJwtprovider,
 	) {}
 
-	async getProfile(id: string): Promise<Profile> {
-		const user = await this.repository.get(id);
-		return profileSchema.parse(user);
-	}
-
 	async createData(dto: CreateUserDTO): Promise<string> {
-		const checkExist = await this.repository.findByCondition({ name: dto.name });
+		const checkExist = await this.repository.findByCondition({ email: dto.email });
 		if (checkExist) {
-			throw DataAlreadyExistsError;
+			throw UserAlreadyExistsError;
 		}
-		const id = await this.repository.insert(dto);
+		const hashedPassword = hashPassword(dto.password);
+		const id = await this.repository.insert({ ...dto, password: hashedPassword });
 		return id;
 	}
 	async updateData(id: string, dto: UpdateUserDTO): Promise<boolean> {
-		const User = await this.repository.get(id);
-		if (!User) {
+		const user = await this.repository.get(id);
+		if (!user) {
 			throw DataNotFoundError;
+		}
+		if (dto.password) {
+			dto.password = hashPassword(dto.password);
 		}
 		this.repository.update(id, dto);
 		return true;
 	}
 	async getData(id: string): Promise<User> {
-		const User = await this.repository.get(id);
-		if (!User) {
+		const user = await this.repository.get(id);
+		console.log(user);
+		if (!user) {
 			throw DataNotFoundError;
 		}
-		return userSchema.parse(User);
+		return userSchema.parse(user);
 	}
 	async listData(filter: FilterUserDTO): Promise<User[]> {
-		const Users = await this.repository.list(filter);
-		return Users.map((User) => userSchema.parse(User));
+		const users = await this.repository.list(filter);
+		return users.map((user) => userSchema.parse(user));
 	}
 	async deleteData(id: string): Promise<boolean> {
-		const User = await this.repository.get(id);
-		if (!User) {
+		const user = await this.repository.get(id);
+		if (!user || user.status === ModelStatus.DELETED) {
 			throw DataNotFoundError;
 		}
 		await this.repository.delete(id);
@@ -80,5 +81,14 @@ export class UserUseCase implements IUserUseCase {
 		const hashedPassword = hashPassword(dto.password);
 		this.repository.insert({ ...dto, password: hashedPassword });
 		return true;
+	}
+
+	async getProfile(id: string): Promise<Profile> {
+		const user = await this.repository.get(id);
+		return profileSchema.parse(user);
+	}
+
+	verifyToken(token: string): Promise<ITokenPayload> {
+		throw new Error("Method not implemented.");
 	}
 }

@@ -13,7 +13,7 @@ import {
 } from "./model/dto";
 import { UserUseCase } from "./usecase";
 
-export const brandModule = () => {
+export const userModule = () => {
 	const router = Router();
 	const repo = new UserRepository();
 	const jwtService = new JwtService(
@@ -32,15 +32,15 @@ export const brandModule = () => {
 		registerSchema,
 	);
 
+	router.post("/login", asyncHandler(http.loginAPI.bind(http)));
+	router.post("/register", asyncHandler(http.registerAPI.bind(http)));
+	router.get("/profile", asyncHandler(http.getProfileAPI.bind(http)));
+
 	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
 	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
 	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
 	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
 	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
-
-	router.post("/login", asyncHandler(http.loginAPI.bind(http)));
-	router.post("/register", asyncHandler(http.registerAPI.bind(http)));
-	router.get("/profile", asyncHandler(http.getProfileAPI.bind(http)));
 
 	return router;
 };

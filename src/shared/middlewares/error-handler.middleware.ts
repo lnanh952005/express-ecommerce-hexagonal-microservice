@@ -6,7 +6,7 @@ import { AppError } from "../models/error";
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 	console.log(err.message);
 	if (err instanceof AppError) {
-		return res.status(err.statusCode || 400).json({ message: err.message });
+		return res.status(err.statusCode || 400).json({ code: err.message });
 	}
 	if (err instanceof ZodError) {
 		return res.status(400).json(z.flattenError(err));
