@@ -4,12 +4,12 @@
 	"description": "",
 	"main": "app.ts",
 	"scripts": {
-		"dev": "tsx watch --include './src/**/*' ./src/app.ts",
-		"build": "tsc && tsc-alias",
-		"start": "node --watch ./dist/app.js",
 		"format": "npx @biomejs/biome format --write",
 		"lint": "npx @biomejs/biome lint --write",
-		"check": "npx @biomejs/biome check --write"
+		"check": "npx @biomejs/biome check --write",
+		"dev": "tsx watch --include './src/**/*' ./src/app.ts",
+		"build": "tsc && tsc-alias",
+		"start": "node --watch ./dist/app.js"
 	},
 	"keywords": [],
 	"author": "",

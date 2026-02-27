@@ -1,5 +1,5 @@
-import { Router } from "express";
 import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
+import { Router } from "express";
 import { BrandRepository } from "./infra/repo/repo";
 import { BrandHttpService } from "./infra/transport/http";
 import { createBrandSchema, filterBrandSchema, updateBrandSchema } from "./model/dto";

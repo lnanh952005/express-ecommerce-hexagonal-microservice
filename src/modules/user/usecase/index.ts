@@ -10,13 +10,18 @@ import type {
 	UpdateUserDTO,
 } from "../model/dto";
 import { InvalidCredentialsError, UserAlreadyExistsError, UserNotFoundError } from "../model/error";
-import { type User, userSchema } from "../model/model";
+import { type Profile, profileSchema, type User, userSchema } from "../model/model";
 
 export class UserUseCase implements IUserUseCase {
 	constructor(
 		private readonly repository: IUserRepository,
 		private readonly jwtService: JwtService,
 	) {}
+
+	async getProfile(id: string): Promise<Profile> {
+		const user = await this.repository.get(id);
+		return profileSchema.parse(user);
+	}
 
 	async createData(dto: CreateUserDTO): Promise<string> {
 		const checkExist = await this.repository.findByCondition({ name: dto.name });

@@ -1,5 +1,5 @@
-import z from "zod";
 import { paginationSchema } from "@shared/models";
+import z from "zod";
 
 export const createBrandSchema = z.object({
 	name: z.string().nonempty(),

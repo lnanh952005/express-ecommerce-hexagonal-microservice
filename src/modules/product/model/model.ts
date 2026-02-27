@@ -1,5 +1,5 @@
-import z from "zod";
 import { statusSchema } from "@shared/models";
+import z from "zod";
 
 export const productSchema = z.object({
 	id: z.string(),

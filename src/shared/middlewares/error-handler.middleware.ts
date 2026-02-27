@@ -1,7 +1,7 @@
 import type { ErrorRequestHandler } from "express";
+import { JsonWebTokenError } from "jsonwebtoken";
 import z, { ZodError } from "zod";
 import { AppError } from "../models/error";
-import { JsonWebTokenError } from "jsonwebtoken";
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 	console.log(err.message);

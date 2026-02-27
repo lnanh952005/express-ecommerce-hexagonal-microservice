@@ -1,6 +1,6 @@
-import { v7 } from "uuid";
 import type { ICategoryRepository } from "@modules/category/interface/index";
 import { CategoryEntity } from "@shared/entities/category.entity";
+import { v7 } from "uuid";
 import type { CreateCategoryDTO, FilterCategoryDTO, UpdateCategoryDTO } from "../../model/dto";
 
 export class CategoryRepository implements ICategoryRepository {

@@ -1,5 +1,5 @@
-import { Router } from "express";
 import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
+import { Router } from "express";
 import { CategoryRepository } from "./infra/repo/repo";
 import { CategoryHttpService } from "./infra/transport/http";
 import { createCategorySchema, filterCategorySchema, updateCategorySchema } from "./model/dto";

@@ -1,5 +1,5 @@
-import z from "zod";
 import { foreignKeySchema, paginationSchema } from "@shared/models";
+import z from "zod";
 
 export const createProductSchema = z.object({
 	name: z.string().nonempty(),

@@ -1,6 +1,5 @@
-import { v7 } from "uuid";
-
 import { UserEntity } from "@shared/entities/user.entity";
+import { v7 } from "uuid";
 import type { IUserRepository } from "../../interface";
 import type { CreateUserDTO, FilterUserDTO, UpdateUserDTO } from "../../model/dto";
 

@@ -10,3 +10,11 @@ export const userSchema = z.object({
 });
 
 export interface User extends z.infer<typeof userSchema> {}
+
+export const profileSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	email: z.string(),
+});
+
+export interface Profile extends z.infer<typeof profileSchema> {}
