@@ -1,4 +1,3 @@
-import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
 import { Router } from "express";
 import { BrandRepository } from "./infra/repo/repo";
 import { BrandHttpService } from "./infra/transport/http";
@@ -16,11 +15,11 @@ export const brandModule = () => {
 		filterBrandSchema,
 	);
 
-	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
-	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
-	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
-	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
-	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
+	router.get("/", http.listDataAPI.bind(http));
+	router.get("/:id", http.getDataAPI.bind(http));
+	router.post("/", http.createDataAPI.bind(http));
+	router.patch("/:id", http.updateDataAPI.bind(http));
+	router.delete("/:id", http.deleteDataAPI.bind(http));
 
 	return router;
 };

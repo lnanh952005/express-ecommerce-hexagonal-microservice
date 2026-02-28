@@ -1,6 +1,8 @@
+import type { ROLE } from "@shared/constants/index.constant";
+
 export interface ITokenPayload {
 	sub: string;
-	role: string;
+	role: keyof typeof ROLE;
 }
 
 export interface IJwtprovider {

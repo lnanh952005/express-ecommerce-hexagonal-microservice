@@ -1,7 +1,8 @@
 import "dotenv/config";
 import "reflect-metadata";
-import compression from "compression";
 import { userModule } from "@modules/user";
+import { configReqQuery } from "@shared/middlewares/config-req-query.middleware";
+import compression from "compression";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -11,7 +12,6 @@ import { productModule } from "./modules/product";
 import { env } from "./shared/components/env";
 import { mySqlDataSource } from "./shared/components/type-orm";
 import { errorHandler } from "./shared/middlewares/error-handler.middleware";
-import { configReqQuery } from "@shared/middlewares/config-req-query.middleware";
 
 const app = express();
 

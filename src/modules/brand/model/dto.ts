@@ -4,11 +4,18 @@ import z from "zod";
 export const createBrandSchema = z.object({
 	name: z.string().nonempty(),
 	description: z.string().optional(),
+	tagLine: z.string().optional(),
+	image: z.string().optional(),
 });
 
 export interface CreateBrandDTO extends z.infer<typeof createBrandSchema> {}
 
-export const updateBrandSchema = createBrandSchema.partial();
+export const updateBrandSchema = z.object({
+	name: z.string().nonempty(),
+	description: z.string().optional(),
+	tagLine: z.string().optional(),
+	image: z.string().optional(),
+});
 
 export interface UpdateBrandDTO extends z.infer<typeof updateBrandSchema> {}
 

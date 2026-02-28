@@ -1,6 +1,5 @@
 import { env } from "@shared/components/env";
 import { JwtService } from "@shared/components/jwt";
-import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
 import { Router } from "express";
 import { UserRepository } from "./infra/repo/repo";
 import { UserHttpService } from "./infra/transport/http";
@@ -32,15 +31,15 @@ export const userModule = () => {
 		registerSchema,
 	);
 
-	router.post("/login", asyncHandler(http.loginAPI.bind(http)));
-	router.post("/register", asyncHandler(http.registerAPI.bind(http)));
-	router.get("/profile", asyncHandler(http.getProfileAPI.bind(http)));
+	router.post("/login", http.loginAPI.bind(http));
+	router.post("/register", http.registerAPI.bind(http));
+	router.get("/profile", http.getProfileAPI.bind(http));
 
-	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
-	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
-	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
-	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
-	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
+	router.get("/", http.listDataAPI.bind(http));
+	router.get("/:id", http.getDataAPI.bind(http));
+	router.post("/", http.createDataAPI.bind(http));
+	router.patch("/:id", http.updateDataAPI.bind(http));
+	router.delete("/:id", http.deleteDataAPI.bind(http));
 
 	return router;
 };

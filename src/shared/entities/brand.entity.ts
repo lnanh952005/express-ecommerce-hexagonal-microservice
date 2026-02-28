@@ -13,6 +13,18 @@ export class BrandEntity extends TypeORMBaseEntity {
 	})
 	description: string;
 
+	@Column("varchar", {
+		nullable: true,
+		default: null,
+	})
+	tagLine: string;
+
+	@Column("varchar", {
+		nullable: true,
+		default: null,
+	})
+	image: string;
+
 	@OneToMany(
 		(_type) => ProductEntity,
 		(product) => product.brand,

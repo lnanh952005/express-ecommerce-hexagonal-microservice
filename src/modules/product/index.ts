@@ -1,4 +1,3 @@
-import { asyncHandler } from "@shared/middlewares/async-handler.middleware";
 import { Router } from "express";
 import { ProductRepository } from "./infra/repo/repo";
 import { RPCBrandRepository, RPCCategoryRepository } from "./infra/repo/rpc";
@@ -19,11 +18,11 @@ export const productModule = () => {
 		filterProductSchema,
 	);
 
-	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
-	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
-	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
-	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
-	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
+	router.get("/", http.listDataAPI.bind(http));
+	router.post("/", http.createDataAPI.bind(http));
+	router.get("/:id", http.getDataAPI.bind(http));
+	router.patch("/:id", http.updateDataAPI.bind(http));
+	router.delete("/:id", http.deleteDataAPI.bind(http));
 
 	return router;
 };

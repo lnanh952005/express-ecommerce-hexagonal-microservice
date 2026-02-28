@@ -88,7 +88,7 @@ export class UserUseCase implements IUserUseCase {
 		return profileSchema.parse(user);
 	}
 
-	verifyToken(token: string): Promise<ITokenPayload> {
+	verifyToken(_token: string): Promise<ITokenPayload> {
 		throw new Error("Method not implemented.");
 	}
 }

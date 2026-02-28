@@ -19,7 +19,6 @@ export enum SessionType {
 	REFRESH_TOKEN = "REFRESH_TOKEN",
 }
 
-
 export enum Gender {
 	MALE = "MALE",
 	FEMALE = "FEMALE",

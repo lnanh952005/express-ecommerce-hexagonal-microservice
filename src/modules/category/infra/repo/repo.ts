@@ -10,12 +10,9 @@ export class CategoryRepository implements ICategoryRepository {
 		});
 	}
 	async list(filter: FilterCategoryDTO): Promise<CategoryEntity[]> {
-		const { limit, page, ...condition } = filter;
 		const categories = await CategoryEntity.find({
-			skip: (page - 1) * limit,
-			take: limit,
 			where: {
-				...condition,
+				...filter,
 			},
 		});
 		return categories;

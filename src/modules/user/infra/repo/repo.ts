@@ -1,8 +1,9 @@
+import { ModelStatus } from "@shared/constants/enum.constant";
 import { UserEntity } from "@shared/entities/user.entity";
+import { Like } from "typeorm";
 import { v7 } from "uuid";
 import type { IUserRepository } from "../../interface";
 import type { CreateUserDTO, FilterUserDTO, UpdateUserDTO } from "../../model/dto";
-import { ModelStatus } from "@shared/constants/enum.constant";
 
 export class UserRepository implements IUserRepository {
 	async list(filter: FilterUserDTO): Promise<UserEntity[]> {
@@ -11,6 +12,7 @@ export class UserRepository implements IUserRepository {
 			skip: (page - 1) * limit,
 			take: limit,
 			where: {
+				...(condition.email ? { email: Like(`%${condition.email}%`) } : {}),
 				...condition,
 			},
 		});
