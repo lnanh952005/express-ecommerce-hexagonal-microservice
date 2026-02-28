@@ -1,6 +1,6 @@
+import "dotenv/config";
 import "reflect-metadata";
 import compression from "compression";
-import "dotenv/config";
 import { userModule } from "@modules/user";
 import express from "express";
 import helmet from "helmet";
@@ -11,6 +11,7 @@ import { productModule } from "./modules/product";
 import { env } from "./shared/components/env";
 import { mySqlDataSource } from "./shared/components/type-orm";
 import { errorHandler } from "./shared/middlewares/error-handler.middleware";
+import { configReqQuery } from "@shared/middlewares/config-req-query.middleware";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(compression());
+app.use(configReqQuery);
 
 const router = () => {
 	const router = express.Router();
@@ -32,8 +34,14 @@ const router = () => {
 (async () => {
 	try {
 		await mySqlDataSource.initialize();
+
 		app.use("/api/v1", router());
+		app.get("/", (_req, res) => {
+			return res.json({ message: "welcome to my api" });
+		});
+
 		app.use(errorHandler);
+
 		app.listen(env.PORT, () => {
 			console.log(`Server is running on port ${env.PORT}`);
 		});
