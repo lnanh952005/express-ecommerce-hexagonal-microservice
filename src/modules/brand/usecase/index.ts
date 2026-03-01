@@ -15,7 +15,7 @@ export class BrandUseCase implements IBrandUseCase {
 		return id;
 	}
 	async updateData(id: string, dto: UpdateBrandDTO): Promise<boolean> {
-		const brand = await this.repository.get(id);
+		const brand = await this.repository.findById(id);
 		if (!brand) {
 			throw DataNotFoundError;
 		}
@@ -23,18 +23,18 @@ export class BrandUseCase implements IBrandUseCase {
 		return true;
 	}
 	async getData(id: string): Promise<Brand> {
-		const brand = await this.repository.get(id);
+		const brand = await this.repository.findById(id);
 		if (!brand) {
 			throw DataNotFoundError;
 		}
 		return BrandSchema.parse(brand);
 	}
 	async listData(filter: FilterBrandDTO): Promise<Brand[]> {
-		const brands = await this.repository.list(filter);
+		const brands = await this.repository.findAll(filter);
 		return brands.map((brand) => BrandSchema.parse(brand));
 	}
 	async deleteData(id: string): Promise<boolean> {
-		const brand = await this.repository.get(id);
+		const brand = await this.repository.findById(id);
 		if (!brand) {
 			throw DataNotFoundError;
 		}

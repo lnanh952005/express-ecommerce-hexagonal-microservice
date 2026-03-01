@@ -28,3 +28,9 @@ export const filterProductSchema = paginationSchema.extend({
 });
 
 export interface FilterProductDTO extends z.infer<typeof filterProductSchema> {}
+
+export const listProductByIds = z.object({
+	ids: z.array(z.string()).nonempty(),
+});
+
+export interface ListProductByIdsDTO extends z.infer<typeof listProductByIds> {}

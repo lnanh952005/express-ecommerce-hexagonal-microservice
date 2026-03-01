@@ -1,6 +1,7 @@
 import { Gender, ModelStatus, UserRole } from "@shared/constants/enum.constant";
 import { Column, Entity, OneToMany } from "typeorm";
 import { TypeORMBaseEntity } from "./base.entity";
+import { CartItemEntity } from "./cart.entity";
 import { UserIdentityEntity } from "./user-identity.entity";
 import type { UserSesstionEntity } from "./user-session.entity";
 
@@ -72,4 +73,10 @@ export class UserEntity extends TypeORMBaseEntity {
 		(session) => session.user,
 	)
 	sessions: UserSesstionEntity[];
+
+	@OneToMany(
+		(_type) => CartItemEntity,
+		(cart) => cart.user,
+	)
+	carts: CartItemEntity[];
 }

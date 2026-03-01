@@ -36,8 +36,8 @@ const router = () => {
 		await mySqlDataSource.initialize();
 
 		app.use("/api/v1", router());
-		app.get("/", (_req, res) => {
-			return res.json({ message: "welcome to my api" });
+		app.get("/", (req, res) => {
+			return res.json({ message: "welcome to my api", data: req.query });
 		});
 
 		app.use(errorHandler);

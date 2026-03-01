@@ -1,6 +1,7 @@
 export interface IQueryRepository<Entity, FilterDTO> {
-	get(id: string): Promise<Entity | null>;
-	list(filter: FilterDTO): Promise<Entity[]>;
+	findById(id: string): Promise<Entity | null>;
+	findByIds(ids: string[]): Promise<Entity[]>;
+	findAll(filter: FilterDTO): Promise<Entity[]>;
 	findByCondition(condition: Record<string, any>): Promise<Entity | null>;
 }
 
