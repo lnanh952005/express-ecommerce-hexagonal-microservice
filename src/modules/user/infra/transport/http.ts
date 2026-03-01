@@ -30,6 +30,12 @@ export class UserHttpService extends BaseHttpService<IUserUseCase> {
 	async registerAPI(req: Request, res: Response<IResponse>) {
 		const body = this.registerSchema.parse(req.body);
 		const result = await this.useCase.register(body);
-		return res.status(201).json({ code: 201, data: result });
+		return res.status(200).json({ code: 200, data: result });
+	}
+
+	async getProfileAPI(_req: Request, res: Response<IResponse>) {
+		const userId = res.locals.requester.sub;
+		const result = await this.useCase.getProfile(userId);
+		return res.status(200).json({ code: 200, data: result });
 	}
 }

@@ -1,22 +1,31 @@
+import { ModelStatus } from "@shared/constants/enum.constant";
+import { UserEntity } from "@shared/entities/user.entity";
+import { In, Like } from "typeorm";
 import { v7 } from "uuid";
-
-import { UserEntity } from "@/shared/entities/user.entity";
 import type { IUserRepository } from "../../interface";
 import type { CreateUserDTO, FilterUserDTO, UpdateUserDTO } from "../../model/dto";
 
 export class UserRepository implements IUserRepository {
-	async list(filter: FilterUserDTO): Promise<UserEntity[]> {
+	findByIds(ids: string[]): Promise<UserEntity[]> {
+		return UserEntity.find({
+			where: {
+				id: In(ids),
+			},
+		});
+	}
+	async findAll(filter: FilterUserDTO): Promise<UserEntity[]> {
 		const { page, limit, ...condition } = filter;
 		const Users = await UserEntity.find({
 			skip: (page - 1) * limit,
 			take: limit,
 			where: {
+				...(condition.email ? { email: Like(`%${condition.email}%`) } : {}),
 				...condition,
 			},
 		});
 		return Users;
 	}
-	async get(id: string): Promise<UserEntity | null> {
+	async findById(id: string): Promise<UserEntity | null> {
 		return await UserEntity.findOneBy({
 			id,
 		});
@@ -40,6 +49,11 @@ export class UserRepository implements IUserRepository {
 		await UserEntity.update(id, { ...data });
 	}
 	async delete(id: string): Promise<void> {
-		await UserEntity.delete({ id });
+		await UserEntity.update(
+			{ id },
+			{
+				status: ModelStatus.DELETED,
+			},
+		);
 	}
 }

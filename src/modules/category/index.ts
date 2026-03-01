@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { asyncHandler } from "@/shared/middlewares/async-handler.middleware";
 import { CategoryRepository } from "./infra/repo/repo";
 import { CategoryHttpService } from "./infra/transport/http";
 import { createCategorySchema, filterCategorySchema, updateCategorySchema } from "./model/dto";
@@ -16,11 +15,11 @@ export const categoryModule = () => {
 		filterCategorySchema,
 	);
 
-	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
-	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
-	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
-	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
-	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
+	router.get("/", http.listDataAPI.bind(http));
+	router.post("/", http.createDataAPI.bind(http));
+	router.get("/:id", http.getDataAPI.bind(http));
+	router.patch("/:id", http.updateDataAPI.bind(http));
+	router.delete("/:id", http.deleteDataAPI.bind(http));
 
 	return router;
 };

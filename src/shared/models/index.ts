@@ -12,3 +12,5 @@ export const statusSchema = z.enum(["ACTIVE", "INACTIVE", "DELETED"]);
 export type ModelStatus = z.infer<typeof statusSchema>;
 
 export const foreignKeySchema = z.string().nonempty();
+
+export const idsSchema = z.array(z.string());

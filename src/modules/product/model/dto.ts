@@ -1,5 +1,5 @@
+import { foreignKeySchema, paginationSchema } from "@shared/models";
 import z from "zod";
-import { foreignKeySchema, paginationSchema } from "@/shared/models";
 
 export const createProductSchema = z.object({
 	name: z.string().nonempty(),
@@ -28,3 +28,9 @@ export const filterProductSchema = paginationSchema.extend({
 });
 
 export interface FilterProductDTO extends z.infer<typeof filterProductSchema> {}
+
+export const listProductByIds = z.object({
+	ids: z.array(z.string()).nonempty(),
+});
+
+export interface ListProductByIdsDTO extends z.infer<typeof listProductByIds> {}

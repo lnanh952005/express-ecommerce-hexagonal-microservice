@@ -1,10 +1,15 @@
 import { Router } from "express";
-
-import { asyncHandler } from "@/shared/middlewares/async-handler.middleware";
 import { ProductRepository } from "./infra/repo/repo";
-import { RPCBrandRepository, RPCCategoryRepository } from "./infra/repo/rpc";
+
+import { RPCBrandRepository } from "./infra/rpc/brand.rpc";
+import { RPCCategoryRepository } from "./infra/rpc/category.rpc";
 import { ProductHttpService } from "./infra/transport/http";
-import { createProductSchema, filterProductSchema, updateProductSchema } from "./model/dto";
+import {
+	createProductSchema,
+	filterProductSchema,
+	listProductByIds,
+	updateProductSchema,
+} from "./model/dto";
 import { ProductUseCase } from "./usecase";
 
 export const productModule = () => {
@@ -18,13 +23,15 @@ export const productModule = () => {
 		createProductSchema,
 		updateProductSchema,
 		filterProductSchema,
+		listProductByIds,
 	);
 
-	router.get("/", asyncHandler(http.listDataAPI.bind(http)));
-	router.post("/", asyncHandler(http.createDataAPI.bind(http)));
-	router.get("/:id", asyncHandler(http.getDataAPI.bind(http)));
-	router.patch("/:id", asyncHandler(http.updateDataAPI.bind(http)));
-	router.delete("/:id", asyncHandler(http.deleteDataAPI.bind(http)));
+	router.get("/", http.listDataAPI.bind(http));
+	router.get("/:id", http.getDataAPI.bind(http));
+	router.post("/", http.createDataAPI.bind(http));
+	router.post("/list-by-ids", http.listByIdsApi.bind(http));
+	router.patch("/:id", http.updateDataAPI.bind(http));
+	router.delete("/:id", http.deleteDataAPI.bind(http));
 
 	return router;
 };

@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { TypeORMBaseEntity } from "./base.entity";
 import { BrandEntity } from "./brand.entity";
+import { CartItemEntity } from "./cart.entity";
 import { CategoryEntity } from "./category.entity";
 
 @Entity("products")
@@ -57,4 +58,10 @@ export class ProductEntity extends TypeORMBaseEntity {
 	)
 	@JoinColumn({ name: "categoryId" })
 	category: CategoryEntity;
+
+	@OneToMany(
+		(_type) => CartItemEntity,
+		(cart) => cart.product,
+	)
+	carts: CartItemEntity[];
 }

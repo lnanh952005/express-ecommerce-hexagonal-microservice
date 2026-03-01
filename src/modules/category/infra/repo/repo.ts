@@ -1,27 +1,32 @@
+import type { ICategoryRepository } from "@modules/category/interface/index";
+import { CategoryEntity } from "@shared/entities/category.entity";
+import { In } from "typeorm";
 import { v7 } from "uuid";
-import type { ICategoryRepository } from "@/modules/category/interface/index";
-import { CategoryEntity } from "@/shared/entities/category.entity";
 import type { CreateCategoryDTO, FilterCategoryDTO, UpdateCategoryDTO } from "../../model/dto";
 
 export class CategoryRepository implements ICategoryRepository {
+	findByIds(ids: string[]): Promise<CategoryEntity[]> {
+		return CategoryEntity.find({
+			where: {
+				id: In(ids),
+			},
+		});
+	}
 	findByCondition(condition: Record<string, any>): Promise<CategoryEntity | null> {
 		return CategoryEntity.findOneBy({
 			...condition,
 		});
 	}
-	async list(filter: FilterCategoryDTO): Promise<CategoryEntity[]> {
-		const { limit, page, ...condition } = filter;
+	async findAll(filter: FilterCategoryDTO): Promise<CategoryEntity[]> {
 		const categories = await CategoryEntity.find({
-			skip: (page - 1) * limit,
-			take: limit,
 			where: {
-				...condition,
+				...filter,
 			},
 		});
 		return categories;
 	}
 
-	async get(id: string): Promise<CategoryEntity | null> {
+	async findById(id: string): Promise<CategoryEntity | null> {
 		const category = await CategoryEntity.findOneBy({ id });
 		return category;
 	}

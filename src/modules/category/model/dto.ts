@@ -1,19 +1,26 @@
 import z from "zod";
-import { paginationSchema } from "@/shared/models";
 
 export const createCategorySchema = z.object({
-	name: z.string(),
+	name: z.string().nonempty(),
+	description: z.string().nonempty().optional(),
+	image: z.string().nonempty().optional(),
+	position: z.string().nonempty().optional(),
+	parentId: z.string().nonempty().optional(),
 });
 
 export interface CreateCategoryDTO extends z.infer<typeof createCategorySchema> {}
 
 export const updateCategorySchema = z.object({
-	name: z.string().optional(),
+	name: z.string().nonempty().optional(),
+	description: z.string().nonempty().optional(),
+	image: z.string().nonempty().optional(),
+	position: z.string().nonempty().optional(),
+	parentId: z.string().nonempty().optional(),
 });
 
 export interface UpdateCategoryDTO extends z.infer<typeof updateCategorySchema> {}
 
-export const filterCategorySchema = paginationSchema.extend({
+export const filterCategorySchema = z.object({
 	name: z.string().optional(),
 });
 
